@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@nx-prisma/prisma-clients": ["libs/prisma-clients/index.ts"],
+      "@nx-prisma/prisma-clients/*": ["libs/prisma-clients/*"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
