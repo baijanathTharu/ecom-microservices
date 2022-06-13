@@ -11,15 +11,22 @@
   "dependencies": {
     "@nrwl/next": "14.2.4",
     "@prisma/client": "^3.15.1",
+    "@trpc/client": "^9.25.1",
+    "@trpc/next": "^9.25.1",
+    "@trpc/react": "^9.25.1",
+    "@trpc/server": "^9.25.1",
     "autoprefixer": "^10.4.7",
     "core-js": "^3.6.5",
     "next": "12.1.5",
     "postcss": "^8.4.14",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-query": "^3.39.1",
     "regenerator-runtime": "0.13.7",
+    "superjson": "^1.9.1",
     "tailwindcss": "^3.1.2",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "zod": "^3.17.3"
   },
   "devDependencies": {
     "@nrwl/cli": "14.2.4",
