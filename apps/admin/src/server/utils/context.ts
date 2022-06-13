@@ -5,6 +5,8 @@ import { IncomingMessage } from 'http';
 import ws from 'ws';
 import { AdminModelClient } from '@nx-prisma/prisma-clients/admin-model';
 
+const db = new AdminModelClient();
+
 export const createContext = async ({
   req,
   res,
@@ -14,7 +16,7 @@ export const createContext = async ({
   return {
     req,
     res,
-    prisma: AdminModelClient,
+    db,
   };
 };
 

@@ -8,7 +8,8 @@ import { ReactElement, ReactNode } from 'react';
 import superjson from 'superjson';
 import { DefaultLayout } from '../components/DefaultLayout';
 import { AppRouter } from '../server/routers';
-import { SSRContext } from '../utils/trpc';
+
+import '../styles.css';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
