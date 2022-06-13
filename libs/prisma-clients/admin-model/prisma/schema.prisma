@@ -1,0 +1,19 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../../node_modules/.prisma/admin-model-client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("ADMIN_MODEL_SOURCE_URL")
+}
+
+model Product {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  @@map("products")
+}

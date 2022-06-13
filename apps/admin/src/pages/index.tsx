@@ -1,13 +1,13 @@
-import styles from '../index.module.css';
+import React from 'react';
+import { trpc } from '../utils/trpc';
 
-export function Index() {
+const UserComponent: React.FC = () => {
+  const { data } = trpc.useQuery(['user.get-user', { email: 'test@test.com' }]);
   return (
-    <div className={styles.page}>
-      <h2 className="text-2xl font-bold my-4 text-center">
-        Admin Dashboard Login
-      </h2>
+    <div>
+      <p>{data?.user?.email}</p>
     </div>
   );
-}
+};
 
-export default Index;
+export default UserComponent;
