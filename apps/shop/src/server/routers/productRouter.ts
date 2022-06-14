@@ -26,31 +26,16 @@ export const productRouter = createRouter()
       try {
         console.log('sent request');
 
-        // axios({
-        //   method: 'get',
-        //   url: `/api/trpc/product-all`,
-        //   baseURL: process.env.ADMIN_BASE_URL,
-        //   params: {
-        //     batch: 1,
-        //     input: 'some',
-        //   },
-        // })
-        //   .then((res) => {
-        //     // console.log('res', res);
-        //     return { success: true, products: { name: 'test' } };
-        //   })
-        //   .catch((err) => {
-        //     console.log('err', JSON.stringify(err.response.data, null, 2));
-        //   });
-        const data = await fetch(
-          `${process.env.ADMIN_BASE_URL}/api/trpc/product-all?batch=1&input=some`,
-          {
-            method: 'GET',
-          }
-        );
-        console.log('data', data);
-        const json = await data.json();
-        console.log('json', json);
+        const url = `${process.env.API_GATEWAY}/product`;
+
+        const response = await axios.get(url);
+
+        const data = response.data as {
+          success: boolean;
+          products: { id: number; name: string }[];
+        };
+
+        return data;
       } catch (e) {
         throw new Error(`Error fetching products: ${e.message}`);
       }
