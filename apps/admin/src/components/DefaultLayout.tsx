@@ -41,6 +41,11 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
               </Link>
             </li>
             <li className="border px-2 hover:bg-slate-200">
+              <Link href="/orders">
+                <a>Orders</a>
+              </Link>
+            </li>
+            <li className="border px-2 hover:bg-slate-200">
               {user ? (
                 user.email
               ) : (

@@ -21,11 +21,43 @@ export const productRouter = createRouter()
       }
     },
   })
+  .mutation('create-order', {
+    input: z.object({
+      userId: z.number().int().min(1),
+      productId: z.number().int().min(1),
+    }),
+    async resolve({ ctx, input }) {
+      const { userId, productId } = input;
+
+      console.log('input', input);
+
+      try {
+        await ctx.db.productBought.create({
+          data: {
+            productId,
+            userId,
+          },
+        });
+        return { success: true, message: 'Product ordered successfully' };
+      } catch (error) {
+        throw new Error(`Error ordering product: ${error.message}`);
+      }
+    },
+  })
   .query('all', {
     async resolve({ ctx }) {
       try {
-        console.log('got request');
         const products = await ctx.db.product.findMany();
+        return { success: true, products: products };
+      } catch (e) {
+        throw new Error(`Error fetching products: ${e.message}`);
+      }
+    },
+  })
+  .query('bought', {
+    async resolve({ ctx }) {
+      try {
+        const products = await ctx.db.productBought.findMany();
         return { success: true, products: products };
       } catch (e) {
         throw new Error(`Error fetching products: ${e.message}`);

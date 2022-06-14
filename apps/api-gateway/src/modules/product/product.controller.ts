@@ -19,6 +19,10 @@ export class ProductController {
   create(@Body() createProductDto: CreateProductDto) {
     return this.productService.create(createProductDto);
   }
+  @Post('create-order')
+  createOrder(@Body() createOrderDto: { userId: number; productId: number }) {
+    return this.productService.createOrder(createOrderDto);
+  }
 
   @Get()
   findAll() {
