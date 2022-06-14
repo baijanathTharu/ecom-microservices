@@ -15,5 +15,16 @@ model Product {
   id   Int    @id @default(autoincrement())
   name String
 
+  productBought ProductBought[]
   @@map("products")
+}
+
+model ProductBought {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+
+  userId Int
+
+  @@map("products_bought")
 }

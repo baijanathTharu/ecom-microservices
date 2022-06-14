@@ -1,11 +1,14 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useState } from 'react';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
 type DefaultLayoutProps = { children: ReactNode };
 
 export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
+  const router = useRouter();
+
   const [user, setUser] = useState<{ id: number; email: string } | null>(null);
 
   useEffect(() => {
@@ -15,7 +18,12 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     }
   }, []);
 
-  console.log('user', user);
+  const handleSubmit = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+
+    router.push('/login');
+  };
 
   return (
     <>
@@ -42,9 +50,9 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
               )}
             </li>
             <li className="border px-2 hover:bg-slate-200">
-              <Link href="/logout">
+              <button onClick={handleSubmit}>
                 <a>Logout</a>
-              </Link>
+              </button>
             </li>
           </ul>
         </nav>
