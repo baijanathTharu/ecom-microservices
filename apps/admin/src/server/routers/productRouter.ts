@@ -22,8 +22,9 @@ export const productRouter = createRouter()
     },
   })
   .query('all', {
-    async resolve({ ctx, input }) {
+    async resolve({ ctx }) {
       try {
+        console.log('got request');
         const products = await ctx.db.product.findMany();
         return { success: true, products: products };
       } catch (e) {

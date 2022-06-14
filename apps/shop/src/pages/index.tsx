@@ -2,10 +2,10 @@ import React from 'react';
 import { trpc } from '../utils/trpc';
 
 const UserComponent: React.FC = () => {
-  const { data } = trpc.useQuery(['user.get-user', { email: 'test@test.com' }]);
+  const { data } = trpc.useQuery(['product-all']);
   return (
     <div>
-      <p>{data?.user?.email}</p>
+      <p>Shop page</p>
     </div>
   );
 };

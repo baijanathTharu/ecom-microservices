@@ -1,10 +1,10 @@
 import superjson from 'superjson';
 import { createRouter } from '../utils/createRouter';
-import { userRouter } from './userRouter';
+import { productRouter } from './productRouter';
 
 export const appRouter = createRouter()
   .transformer(superjson)
-  .merge('user.', userRouter);
+  .merge('product-', productRouter);
 // other merged routes here
 
 // export type definition of API
