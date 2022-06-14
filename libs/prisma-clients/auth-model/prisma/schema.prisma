@@ -1,0 +1,17 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../../node_modules/.prisma/auth-model-client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("AUTH_MODEL_SOURCE_URL")
+}
+
+model User {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+}
