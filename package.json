@@ -9,8 +9,10 @@
   },
   "private": true,
   "dependencies": {
+    "@nestjs/axios": "0.0.8",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
+    "@nestjs/mapped-types": "^1.0.1",
     "@nestjs/microservices": "^8.4.6",
     "@nestjs/platform-express": "^8.0.0",
     "@nrwl/next": "14.2.4",
@@ -20,7 +22,6 @@
     "@trpc/react": "^9.25.1",
     "@trpc/server": "^9.25.1",
     "autoprefixer": "^10.4.7",
-    "axios": "^0.27.2",
     "core-js": "^3.6.5",
     "next": "12.1.5",
     "postcss": "^8.4.14",
