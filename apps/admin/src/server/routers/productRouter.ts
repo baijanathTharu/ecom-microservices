@@ -17,6 +17,7 @@ export const productRouter = createRouter()
         });
         return { success: true, message: 'Username set successfully' };
       } catch (error) {
+        console.log('error', error);
         throw new Error(`Error creating product: ${error.message}`);
       }
     },
@@ -39,6 +40,35 @@ export const productRouter = createRouter()
           },
         });
         return { success: true, message: 'Product ordered successfully' };
+      } catch (error) {
+        throw new Error(`Error ordering product: ${error.message}`);
+      }
+    },
+  })
+  .mutation('deliver-order', {
+    input: z.object({
+      userId: z.number().int().min(1),
+      productId: z.number().int().min(1),
+    }),
+    async resolve({ ctx, input }) {
+      const { userId, productId } = input;
+
+      try {
+        const productBought = await ctx.db.productBought.findFirst({
+          where: {
+            userId,
+            productId,
+          },
+        });
+        await ctx.db.productBought.update({
+          where: {
+            id: productBought.id,
+          },
+          data: {
+            isBought: true,
+          },
+        });
+        return { success: true, message: 'Product delivered successfully' };
       } catch (error) {
         throw new Error(`Error ordering product: ${error.message}`);
       }

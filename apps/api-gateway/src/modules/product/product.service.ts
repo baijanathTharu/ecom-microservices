@@ -3,7 +3,6 @@ import { HttpService } from '@nestjs/axios';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
-import { lastValueFrom, map, tap } from 'rxjs';
 
 @Injectable()
 export class ProductService {
@@ -17,33 +16,49 @@ export class ProductService {
     try {
       const url = `${process.env.ADMIN_BASE_URL}/api/trpc/product-create-order`;
 
-      // this.httpService.post(url, createOrderDto).pipe(
-      //   tap((resp) => console.log(resp)),
-      //   map((resp) => resp.data),
-      //   tap((data) => {
-      //     console.log('data', data);
-      //     return {
-      //       success: true,
-      //       message: 'Product ordered successfully',
-      //     };
-      //   })
-      // );
-
-      const data = await lastValueFrom(
-        this.httpService.post(url, createOrderDto).pipe(map((res) => res.data))
-      );
-
-      console.log('data', data);
+      const data = await this.httpService.post(url, createOrderDto).toPromise();
 
       return {
-        success: false,
-        error: 'something went wrong',
+        success: true,
+        message: 'Order created successfully',
       };
     } catch (error) {
       console.log('something went wrong', JSON.stringify(error, null, 2));
       return {
         success: false,
         error: error.message,
+      };
+    }
+  }
+
+  async ordersByUser(userId: number) {
+    try {
+      const url = `${process.env.ADMIN_BASE_URL}/api/trpc/product-bought`;
+
+      const res = await this.httpService.get(url).toPromise();
+
+      const data = res.data;
+
+      const temp = data.result.data.json as {
+        products: {
+          id: number;
+          userId: number;
+          productId: number;
+          isBought: boolean;
+        }[];
+      };
+
+      const productsByUser = temp.products.filter(
+        (product) => product.userId === +userId
+      );
+
+      return productsByUser;
+    } catch (error) {
+      console.log('something went wrong', JSON.stringify(error, null, 2));
+      return {
+        success: false,
+        error: error.message,
+        products: [],
       };
     }
   }

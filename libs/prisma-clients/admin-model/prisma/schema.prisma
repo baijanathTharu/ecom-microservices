@@ -26,5 +26,7 @@ model ProductBought {
 
   userId Int
 
+  isBought Boolean @default(false)
+
   @@map("products_bought")
 }

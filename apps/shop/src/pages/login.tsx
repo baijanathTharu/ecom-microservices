@@ -27,7 +27,7 @@ export default function login() {
   };
 
   return (
-    <div className="mx-auto p-8 border my-4">
+    <div className="w-1/2 mx-auto p-8 border my-4">
       <h2 className="text-center font-bold my-2">Login</h2>
 
       <form onSubmit={handleSubmit}>

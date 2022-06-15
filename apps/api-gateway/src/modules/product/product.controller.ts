@@ -24,6 +24,12 @@ export class ProductController {
     return this.productService.createOrder(createOrderDto);
   }
 
+  @Get('orders-by-user/:userId')
+  ordersByUser(@Param('userId') userId: number) {
+    console.log('userId', userId);
+    return this.productService.ordersByUser(userId);
+  }
+
   @Get()
   findAll() {
     return this.productService.findAll();
