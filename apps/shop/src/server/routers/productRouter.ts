@@ -3,25 +3,29 @@ import z from 'zod';
 import { createRouter } from '../utils/createRouter';
 
 export const productRouter = createRouter()
-  // .mutation('add', {
-  //   input: z.object({
-  //     name: z.string().min(1).max(100),
-  //   }),
-  //   async resolve({ ctx, input }) {
-  //     const { name } = input;
+  .mutation('place-order', {
+    input: z.object({
+      userId: z.number().int().min(1),
+      productId: z.number().int().min(1),
+    }),
+    async resolve({ ctx, input }) {
+      const { userId, productId } = input;
 
-  //     try {
-  //       await ctx.db.product.create({
-  //         data: {
-  //           name,
-  //         },
-  //       });
-  //       return { success: true, message: 'Username set successfully' };
-  //     } catch (error) {
-  //       throw new Error(`Error creating product: ${error.message}`);
-  //     }
-  //   },
-  // })
+      try {
+        const url = `${process.env.API_GATEWAY}/product/create-order`;
+
+        const res = await axios.post(url, { userId, productId });
+
+        if (!res.data.success) {
+          throw new Error('something went wrong');
+        }
+
+        return { success: true, message: 'Product bought successfully' };
+      } catch (error) {
+        throw new Error(`Error buying: ${error.message}`);
+      }
+    },
+  })
   .query('all', {
     input: z.object({
       userId: z.number(),

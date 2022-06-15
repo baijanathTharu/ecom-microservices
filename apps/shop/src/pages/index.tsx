@@ -20,12 +20,36 @@ const UserComponent: React.FC = () => {
     },
   ]);
 
-  console.log('data', data);
+  const utils = trpc.useContext();
+
+  const createOrder = trpc.useMutation('product-place-order', {
+    async onSuccess() {
+      // refetches posts after a post is added
+      await utils.invalidateQueries(['product-all']);
+    },
+    async onError(error) {
+      console.log('error', error);
+    },
+  });
+
+  const handleOrder = ({
+    productId,
+    userId,
+  }: {
+    productId: number;
+    userId: number;
+  }) => {
+    const input = { productId, userId };
+    createOrder.mutateAsync(input);
+  };
 
   return (
     <div className="mx-auto w-1/2">
       <div>
         <h2 className="my-4 text-center font-bold text-2xl">Shop page</h2>
+      </div>
+      <div className="text-red-400 text-xs my-2 text-center">
+        {createOrder.isError && createOrder.error.message}
       </div>
       <ul className="p-4 border">
         {data?.map((product) => (
@@ -36,9 +60,20 @@ const UserComponent: React.FC = () => {
             ) : product.isOrdered ? (
               <span className="text-red-400">Ordered</span>
             ) : (
-              <button className="py-1 px-4 border bg-gray-300 hover:bg-gray-200">
-                Buy
-              </button>
+              <>
+                <button
+                  className="py-1 px-4 border bg-gray-300 hover:bg-gray-200"
+                  onClick={() =>
+                    handleOrder({
+                      userId: userId as number,
+                      productId: product.id,
+                    })
+                  }
+                  disabled={createOrder.isLoading}
+                >
+                  Order
+                </button>
+              </>
             )}
           </li>
         ))}
