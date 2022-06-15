@@ -10,4 +10,4 @@ It consists of 4 services.
 4. API Gateway (**NestJS**) - This service is used to proxy the requests to the other services. It sits between `shop` and `admin dashboard`.
 
 The architecture of the project is as follows:
-![Architecture]('./architecture.png')
+![Architecture](https://github.com/baijanathTharu/ecom-microservices/blob/main/architecture.png)
